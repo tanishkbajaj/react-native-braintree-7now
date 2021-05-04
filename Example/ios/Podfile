@@ -1,0 +1,47 @@
+require_relative '../node_modules/react-native/scripts/react_native_pods'
+require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
+
+platform :ios, '10.0'
+
+target 'demoReactNativeApp' do
+  config = use_native_modules!
+
+# comment the next line to disable credit card scanning
+pod 'CardIO'
+pod 'Braintree'
+
+pod 'BraintreeDropIn'
+
+ # comment the next line to disable Apple pay
+pod 'Braintree/Apple-Pay'
+
+ # comment the next line to disable PayPal
+pod 'Braintree/PayPal'
+
+ # comment the next line to disable Venmo
+pod 'Braintree/Venmo'
+
+ # Data collector for Braintree Advanced Fraud Tools
+pod 'Braintree/DataCollector'
+
+  use_react_native!(
+    :path => config[:reactNativePath],
+    # to enable hermes on iOS, change `false` to `true` and then install pods
+    :hermes_enabled => false
+  )
+
+  target 'demoReactNativeAppTests' do
+    inherit! :complete
+    # Pods for testing
+  end
+
+  # Enables Flipper.
+  #
+  # Note that if you have use_frameworks! enabled, Flipper will not work and
+  # you should disable the next line.
+  use_flipper!()
+
+  post_install do |installer|
+    react_native_post_install(installer)
+  end
+end
